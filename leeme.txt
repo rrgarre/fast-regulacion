@@ -1,0 +1,22 @@
+-INSTALAR EN MAQUINA NUEVA (Primera ejecución)
+
+Creas un entorno virtual nuevo:
+
+python3 -m venv venv
+source venv/bin/activate     # en Linux/macOS
+# o venv\Scripts\activate    # en Windows
+
+Instalas dependencias:
+
+pip install -r requirements.txt
+
+
+
+
+-EJECUTAR
+
+# activar el entorno virtual
+.\venv\Scripts\Activate.ps1
+
+# ejecutar tu script
+python mi_script.py
