@@ -3,28 +3,35 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 import io
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
 
 # credenciales
-USERNAME = "EXT_GMAOCL13"           # usuario por defecto que pediste
-PASSWORD = "9*BJEMdU"       # contraseña por defecto que pediste
+USERMCT = os.getenv("USERMCT")
+PASSWORD = os.getenv("PASSWORD")
+
+# telegram
+TOKEN = os.getenv("TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
 # endpoints
-LOGIN_URL = "https://cas.mct.es/cas/login?service=https%3A%2F%2Ftelemetria2.mct.es%2F"
-DATOS_URL = "https://telemetria2.mct.es/ws/vistas/findInstalacionesByUrlVista/ncc"
-DETALLES_AL016 = "https://telemetria2.mct.es/ws/vistas/findDetallesInstalacionByCodigoInstalacion/AL016"
-DETALLES_DP003 = "https://telemetria2.mct.es/ws/vistas/findDetallesInstalacionByCodigoInstalacion/DP003"
-DETALLES_DP004 = "https://telemetria2.mct.es/ws/vistas/findDetallesInstalacionByCodigoInstalacion/DP004"
-DETALLES_DP007 = "https://telemetria2.mct.es/ws/vistas/findDetallesInstalacionByCodigoInstalacion/DP007"
-DETALLES_DP008 = "https://telemetria2.mct.es/ws/vistas/findDetallesInstalacionByCodigoInstalacion/DP008"
-DETALLES_DP017 = "https://telemetria2.mct.es/ws/vistas/findDetallesInstalacionByCodigoInstalacion/DP017"
+LOGIN_URL = os.getenv("LOGIN_URL")
+DATOS_URL = os.getenv("DATOS_URL")
+DETALLES_AL016 = os.getenv("DETALLES_AL016")
+DETALLES_DP003 = os.getenv("DETALLES_DP003")
+DETALLES_DP004 = os.getenv("DETALLES_DP004")
+DETALLES_DP007 = os.getenv("DETALLES_DP007")
+DETALLES_DP008 = os.getenv("DETALLES_DP008")
+DETALLES_DP017 = os.getenv("DETALLES_DP017")
 
 
 @app.route("/generar_csv")
 def generar_csv():
   session = requests.Session()
-  print("Hola Mundo")
 
   # --- Paso 1: GET login ----------------------------------------------------------
   resp = session.get(LOGIN_URL)
@@ -33,7 +40,7 @@ def generar_csv():
 
   # --- Paso 2: POST login ----------------------------------------------------------
   payload = {
-      "username": USERNAME,
+      "username": USERMCT,
       "password": PASSWORD,
       "execution": execution,
       "_eventId": "submit",
@@ -260,8 +267,6 @@ def generar_csv():
   archivo = "datos_formato_excel.csv"
 
   # --- Paso 12: Enviar CSV a TELEGRAM -------------------------------
-  TOKEN = "8221357412:AAEpQpHHg0ZE_XvIFl0OOyAwmsmSlMHfclM"
-  CHAT_ID = "170041703"
   with open(archivo, "rb") as f:
       requests.post(
           f"https://api.telegram.org/bot{TOKEN}/sendDocument",
