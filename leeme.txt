@@ -14,4 +14,10 @@ pip install -r requirements.txt
 .\venv\Scripts\Activate.ps1
 
 # ejecutar tu script
-python mi_script.py
+python app.py
+
+# ir "ip:puerto/generar_csv"
+
+
+**el script "monitor_telemetria.py" es al código antes de envolverlo en la función que "flask"
+  hace que se convierta en un ENDOPINT

@@ -275,12 +275,12 @@ def generar_csv():
       )
 
   # ------------ responder como descarga ----------------------------------
-  return send_file(
-      archivo,
-      mimetype="text/csv",
-      as_attachment=True,
-      download_name="datos_formato_excel.csv"
-  )
+  # return send_file(
+  #     archivo,
+  #     mimetype="text/csv",
+  #     as_attachment=True,
+  #     download_name="datos_formato_excel.csv"
+  # )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
