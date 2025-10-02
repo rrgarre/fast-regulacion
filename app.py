@@ -71,6 +71,12 @@ def generar_csv():
       if senal.get("descripcion") == "Totalizador caudalímetro":
           totalizador_valor = senal.get("valorFormateado", "")
           break
+  # Obtener totalizador caudalímetro
+  consigna_caudal = ""
+  for senal in detalles_al016.get("senalesInstalacion", []):
+      if senal.get("descripcion") == "Consigna caudal":
+          consigna_caudal = str(int(senal.get("valor", ""))) + " l/s"
+          break
   # --- Paso 5: GET detalles DP003 ----------------------------------------------------------
   r_detalles_dp003 = session.post(DETALLES_DP003, data={})
   if r_detalles_dp003.headers.get("Content-Type", "").startswith("application/json"):
@@ -120,7 +126,7 @@ def generar_csv():
       if senal.get("descripcion") == "Caudal entrada 2":
           dp004Caudal2 = float(senal.get("valor", 0))
           break
-  dp004Caudal = round(dp004Caudal1 + dp004Caudal2)
+  dp004Caudal = round((dp004Caudal1 + dp004Caudal2)/10)*10
   # --- Paso 7: GET detalles DP007 ----------------------------------------------------------
   r_detalles_dp007 = session.post(DETALLES_DP007, data={})
   if r_detalles_dp007.headers.get("Content-Type", "").startswith("application/json"):
@@ -213,7 +219,7 @@ def generar_csv():
       # Primera fila (combinando literales y datos)
       fila1 = [
           str(valores_dict.get("ALMENARA DE POZO LOS PALOS", "0")).replace(".", ","),
-          "",
+          consigna_caudal,
           str(valores_dict.get("PARTIDOR DE SIFÓN DE LA GUÍA", "0")).replace(".", ","),
           "",
           str(valores_dict.get("ALMENARA DE LA ALJORRA", "0")).replace(".", ","),
