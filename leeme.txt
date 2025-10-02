@@ -8,6 +8,7 @@ python -m venv venv
 pip install -r requirements.txt
 
 
+
 -EJECUTAR
 
 # activar el entorno virtual
@@ -19,5 +20,19 @@ python app.py
 # ir "ip:puerto/generar_csv"
 
 
+**Si queremos ejecutar en 2º plano
+  ·lanzamos
+    nohup python app.py > output.log 2>&1 &
+  ·comprobamos proceso en marcha
+    ps aux | grep app.py
+    
+    ubuntu    12345  0.2  1.5 123456 45678 ?  S  18:12   0:05 python app.py
+    ubuntu    12360  0.0  0.0   6432   892 pts/0  S+  18:12   0:00 grep --color=auto app.py
+
+    El PID es la segunda columna → en este caso 12345.
+    El otro que ves (grep) lo ignoras.
+
+  ·si queremos matar proceso
+    kill <PID> 
 **el script "monitor_telemetria.py" es al código antes de envolverlo en la función que "flask"
   hace que se convierta en un ENDOPINT
