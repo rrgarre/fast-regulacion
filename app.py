@@ -273,20 +273,20 @@ def generar_csv():
   archivo = "datos_formato_excel.csv"
 
   # --- Paso 12: Enviar CSV a TELEGRAM -------------------------------
-  with open(archivo, "rb") as f:
-      requests.post(
-          f"https://api.telegram.org/bot{TOKEN}/sendDocument",
-          data={"chat_id": CHAT_ID},
-          files={"document": f}
-      )
+  # with open(archivo, "rb") as f:
+  #     requests.post(
+  #         f"https://api.telegram.org/bot{TOKEN}/sendDocument",
+  #         data={"chat_id": CHAT_ID},
+  #         files={"document": f}
+  #     )
 
   # ------------ responder como descarga ----------------------------------
-  # return send_file(
-  #     archivo,
-  #     mimetype="text/csv",
-  #     as_attachment=True,
-  #     download_name="datos_formato_excel.csv"
-  # )
+  return send_file(
+      archivo,
+      mimetype="text/csv",
+      as_attachment=True,
+      download_name="datos_formato_excel.csv"
+  )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
