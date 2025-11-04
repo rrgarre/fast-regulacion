@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 .env
 *.csv
+datos.csv
+datos_formato_excel.csv
