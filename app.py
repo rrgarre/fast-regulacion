@@ -71,12 +71,31 @@ def generar_csv():
       if senal.get("descripcion") == "Totalizador caudalímetro":
           totalizador_valor = senal.get("valorFormateado", "")
           break
-  # Obtener totalizador caudalímetro
+  # Obtener caudal
   consigna_caudal = ""
+  # veamos si no está por nivel la almenara
+  compuerta1 = "4"
   for senal in detalles_al016.get("senalesInstalacion", []):
-      if senal.get("descripcion") == "Consigna caudal":
-          consigna_caudal = str(int(senal.get("valor", ""))) + " l/s"
+      if senal.get("descripcion") == "Modo funcionamiento compuerta 1":
+          compuerta1 = str(int(senal.get("valor", "")))
+          print("Compuerta 1 modo: ", compuerta1)
           break
+  compuerta2 = "4"
+  for senal in detalles_al016.get("senalesInstalacion", []):
+      if senal.get("descripcion") == "Modo funcionamiento compuerta 1":
+          compuerta2 = str(int(senal.get("valor", "")))
+          print("Compuerta 2 modo: ", compuerta2)
+          break
+      
+  if compuerta1 != "4" or compuerta2 != "4":
+      for senal in detalles_al016.get("senalesInstalacion", []):
+          if senal.get("descripcion") == "Consigna caudal":
+              consigna_caudal = str(int(senal.get("valor", ""))) + " l/s"
+              print("Consigna de caudal: ", consigna_caudal)
+              break
+  else:
+      consigna_caudal = "N"
+  
   # --- Paso 5: GET detalles DP003 ----------------------------------------------------------
   r_detalles_dp003 = session.post(DETALLES_DP003, data={})
   if r_detalles_dp003.headers.get("Content-Type", "").startswith("application/json"):
@@ -262,8 +281,7 @@ def generar_csv():
       fila2 = [
           "Altura de Tentegorra", str(suma_niveles).replace(".", ","),
           "Canal viejo", round(canalViejo),
-          "Totalizador Pozo los Palos", totalizador_valor,
-          "Vistabella", dp017Caudal
+          "Totalizador Pozo los Palos", totalizador_valor
       ]
       writer2.writerow(fila2)
 
