@@ -157,7 +157,7 @@ def generar_csv():
   dp007Aportacion = 0.0
   for senal in detalles_dp007.get("senalesInstalacion", []):
       if senal.get("descripcion") == "Caudal a nuevo canal de Cartagena":
-          dp007Aportacion = round(float(senal.get("valor", 0)) * 3.4 / 100) * 100
+          dp007Aportacion = round(float(senal.get("valor", 0)) * 3.6 / 100) * 100
           break
   # --- Paso 8: GET detalles DP008 ----------------------------------------------------------
   r_detalles_dp008 = session.post(DETALLES_DP008, data={})
@@ -182,7 +182,7 @@ def generar_csv():
   dp008Aportacion = 0.0
   for senal in detalles_dp008.get("senalesInstalacion", []):
       if senal.get("descripcion") == "Caudal a nuevo canal de Cartagena":
-          dp008Aportacion = round(float(senal.get("valor", 0)) * 3.4 / 100) * 100
+          dp008Aportacion = round(float(senal.get("valor", 0)) * 3.6 / 100) * 100
           break
   # --- Paso 9: GET detalles DP017 ----------------------------------------------------------
   r_detalles_dp017 = session.post(DETALLES_DP017, data={})
@@ -195,7 +195,7 @@ def generar_csv():
   dp017Caudal = 0.0
   for senal in detalles_dp017.get("senalesInstalacion", []):
       if senal.get("descripcion") == "Caudal a depósito de Vistabella (DP043)":
-          dp017Caudal = round(float(senal.get("valor", 0)) * 3.4 / 100) * 100
+          dp017Caudal = round(float(senal.get("valor", 0)) * 3.6 / 100) * 100
           break
   # --- Paso 10: Crear CSV ----------------------------------------------------------
   with open("datos.csv", "w", newline="", encoding="utf-8") as f:
@@ -273,8 +273,7 @@ def generar_csv():
           "",
           str(valores_dict.get("ALMENARA DE TORREMENDO", "0")).replace(".", ","),
           "",
-          0,
-          4400
+          0
       ]
       writer2.writerow(fila1)
       # Segunda fila (literales con los datos extraídos)

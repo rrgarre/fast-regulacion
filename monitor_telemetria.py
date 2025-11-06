@@ -160,9 +160,11 @@ else:
 
 # Aportacion NCC
 dp007Aportacion = 0.0
+dp007AportacionTemp = 0.0
 for senal in detalles_dp007.get("senalesInstalacion", []):
     if senal.get("descripcion") == "Caudal a nuevo canal de Cartagena":
-        dp007Aportacion = round(float(senal.get("valor", 0)) * 3.4 / 100) * 100
+        dp007Aportacion = round(float(senal.get("valor", 0)) * 3.6 / 100) * 100
+        print("final: ", dp007Aportacion)
         break
 
 
@@ -191,7 +193,7 @@ dp008Altura = max(dp008Altura1, dp008Altura2)
 dp008Aportacion = 0.0
 for senal in detalles_dp008.get("senalesInstalacion", []):
     if senal.get("descripcion") == "Caudal a nuevo canal de Cartagena":
-        dp008Aportacion = round(float(senal.get("valor", 0)) * 3.4 / 100) * 100
+        dp008Aportacion = round(float(senal.get("valor", 0)) * 3.6 / 100) * 100
         break
 
 
@@ -207,7 +209,7 @@ else:
 dp017Caudal = 0.0
 for senal in detalles_dp017.get("senalesInstalacion", []):
     if senal.get("descripcion") == "Caudal a depósito de Vistabella (DP043)":
-        dp017Caudal = round(float(senal.get("valor", 0)) * 3.4 / 100) * 100
+        dp017Caudal = round(float(senal.get("valor", 0)) * 3.6 / 100) * 100
         break
 
 
@@ -301,8 +303,7 @@ with open("datos_formato_excel.csv", "w", newline="", encoding="utf-8") as f2:
         "",
         str(valores_dict["ALMENARA DE TORREMENDO"]).replace(".", ","),
         "",
-        0,
-        4400
+        0
     ]
     writer2.writerow(fila1)
 
